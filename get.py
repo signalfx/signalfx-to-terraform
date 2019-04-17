@@ -55,10 +55,22 @@ if args.sfx_realm is not None:
 env = Environment(trim_blocks=True, lstrip_blocks=True)
 
 single_value_chart_template = env.from_string('''resource "signalfx_single_value_chart" "{{ terraformName }}" {
-    name        = "{{ name }}"
+    name                = "{{ name }}"
     {% if description != "" %}
-    description = "{{ description }}"
+    description         = "{{ description }}"
     {% endif %}
+    {% if options.colorBy != "" %}
+    color_by            = "{{ options.colorBy }}"
+    {% endif %}
+    color_scale         = TKTK
+    maximum_precision   = {{ options.maximumPrecision }}
+    is_timestamp_hidden = {{ options.timestampHidden }}
+    refresh_interval    = {{ options.refreshInterval }}
+    show_spark_line     = {{ options.showSparkLine }}
+    {% if options.unitPrefix %}
+    unit_prefix         = "{{ options.unitPrefix }}"
+    {% endif %}
+
     program_text = <<-EOF
 {{ programText }}
     EOF
