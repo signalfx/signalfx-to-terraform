@@ -73,7 +73,7 @@ def do_time_chart(client, chart, name):
 
 parser = argparse.ArgumentParser()
 
-parser.add_argument('--sfx_realm', help='SignalFx Realm (defaults to none)')
+parser.add_argument('--realm', help='SignalFx Realm (defaults to none)')
 parser.add_argument('--verbose', help='Be verbose', action='store_const', const=True )
 parser.add_argument('--chart', help='A chart to convert')
 parser.add_argument('--dashboard', help='A dashboard to convert')
@@ -89,10 +89,6 @@ if 'SFX_AUTH_TOKEN' not in os.environ:
     sys.exit(1)
 sfx_api_key = os.environ['SFX_AUTH_TOKEN']
 
-if args.sfx_realm is not None:
-    # Use a realm if we get one
-    sfx = signalfx.SignalFx(api_endpoint='https://api.' + args.realm + '.signalfx.com')
-
 templateLoader = FileSystemLoader(searchpath="./")
 env = Environment(loader=templateLoader, trim_blocks=True, lstrip_blocks=True)
 
@@ -107,7 +103,7 @@ if args.chart is None and args.dashboard is None and args.detector is None:
 
 if __name__ == "__main__":
     sfx = signalfx.SignalFx()
-    if args.sfx_realm is not None:
+    if args.realm is not None:
         # Use a realm if we get one
         sfx = signalfx.SignalFx(api_endpoint='https://api.' + args.realm + '.signalfx.com')
 
