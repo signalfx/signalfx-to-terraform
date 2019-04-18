@@ -3,7 +3,7 @@
 This is a tool for exporting SignalFx assets to Terraform. It aims to support all of the assets that are supported by the [SignalFx Terraform Provider](https://github.com/signalfx/terraform-provider-signalfx).
 
 # TODO
-* Output currently does *not* know how to generate per-asset names that are unique
+* Output currently does *not* know how to generate per-asset names that are unique, just placeholders for now
 * Some attributes emit comment placeholders
 * Does not yet understand chart types other than List, Time and Single Value
 * Test it more, no testing has yet been done to verify the output
