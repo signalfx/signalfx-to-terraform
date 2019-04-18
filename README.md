@@ -10,6 +10,7 @@ The resulting Terraform config (in HCL) is emitted on `STDOUT`.
 * Output currently does *not* know how to generate per-asset names that are unique, just placeholders for now
 * Some attributes emit comment placeholders
 * Does not yet understand chart types other than List, Time and Single Value
+* While it can emit dashboards, it doesn't quite grok the `chart` asset and emits them empty.
 * Test it more, no testing has yet been done to verify the output
 * I think realm works?
 
