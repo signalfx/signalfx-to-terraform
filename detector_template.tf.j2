@@ -1,0 +1,59 @@
+resource "signalfx_detector" "{{ terraformName }}" {
+    name                = "{{ name }}"
+    {% if description != "" %}
+    description         = "{{ description }}"
+    {% endif %}
+    {% if maxDelay != "" %}
+    max_delay           = {{ maxDelay }}
+    {% endif %}
+    {% if teams | length > 0 %}
+    teams               = {{ teams | tojson }}
+    {% endif %}
+    {% if tags | length > 0 %}
+    tags                = {{ tags | tojson }}
+    {% endif %}
+    program_text        = <<-EOF
+{{ programText }}
+    EOF
+
+    {% if visualizationOptions  %}
+    disable_sampling    = {{ visualizationOptions.disableSampling }}
+    show_data_markers   = {{ visualizationOptions.showDataMarkers }}
+    show_event_lines    = {{ visualizationOptions.showEventLines }}
+    {% if visualizationOptions.time %}
+    time_range          = {{ visualizationOptions.time.range }}
+    start_time          = {{ visualizationOptions.time.start }}
+    end_time            = {{ visualizationOptions.time.end }}
+    {% endif %}
+    {% endif %}
+
+    {% for rule in rules %}
+    rule {
+        description             = "{{ rule.description }}"
+        detect_label            = "{{ rule.detectLabel }}"
+        {% if rule.tip != "" %}
+        tip                     = "{{ rule.tip }}"
+        {% endif %}
+        severity                = "{{ rule.severity }}"
+        disabled                = {{ rule.disabled }}
+        {% if rule.parameterizedSubject != "" %}
+        parameterized_subject   = "{{ rule.parameterizedSubject }}"
+        {% endif %}
+        {% if rule.parameterizedBody != "" %}
+        parameterized_body      = "{{ rule.parameterizedBody }}"
+        {% endif %}
+        {% if rule.runbookUrl != "" %}
+        runbook_url             = {{ rule.runbookUrl }}
+        {% endif %}
+        {% if notifications | length > 0 %}
+        notifications = [
+            {% for notification in rule.notifications %}
+            {% if notification.type == "Team" %}
+            "Team:{{ notification.team }}"
+            {% endif %}
+            {% endfor %}
+        ]
+        {% endif %}
+    }
+    {% endfor %}
+}
