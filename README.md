@@ -1,3 +1,7 @@
+# Deprecated
+
+This tool is deprecated. Please use the [official Terraform provider](https://github.com/terraform-providers/terraform-provider-signalfx)'s [import](https://www.terraform.io/docs/commands/import.html) support in conjunction with [state show](https://www.terraform.io/docs/commands/state/show.html).
+
 # SignalFx to Terraform Exporter
 
 This is a tool for exporting SignalFx assets to Terraform. It aims to support all of the assets that are supported by the [SignalFx Terraform Provider](https://github.com/signalfx/terraform-provider-signalfx).
